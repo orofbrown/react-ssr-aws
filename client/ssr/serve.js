@@ -33,7 +33,7 @@ function createListeners() {
       }
 
       console.info(
-        `HTTP CLIENT server started on http://localhost:${HTTP_PORT}`,
+        `HTTP development server started on http://localhost:${HTTP_PORT}`,
       );
 
       // createSecureDevServer(HTTP_PORT, HTTPS_PORT);
@@ -44,7 +44,7 @@ function createListeners() {
 }
 
 async function done(...args) {
-  console.log('DONE');
+  // console.log('DONE');
   if (!isBuilt) {
     isBuilt = true;
     await createListeners();

@@ -9,51 +9,62 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(bmp|gif|ico|jpe?g|png|svg)$/,
-        type: 'asset/resource',
-        parser: {
-          dataUriCondition: {
-            maxSize: 1000,
-          },
-        },
-      },
-      {
-        exclude: [/node_modules/],
-        include: [
-          path.resolve(__dirname, '../ssr'),
-          path.resolve(__dirname, '../src'),
-        ],
-        test: /\.js$/,
-        use: [
+        oneOf: [
           {
-            loader: 'thread-loader',
-            options: {
-              poolTimeout: Infinity,
+            test: /favicon.ico/,
+            type: 'asset/resource',
+          },
+          {
+            test: /\.(bmp|gif|jpe?g|png|svg)$/,
+            type: 'asset/resource',
+            parser: {
+              dataUriCondition: {
+                maxSize: 1000,
+              },
+            },
+            generator: {
+              filename: 'static/images/[name][ext]',
             },
           },
           {
-            loader: 'babel-loader',
-            options: {
-              presets: ['@babel/preset-env'],
-            },
+            exclude: [/node_modules/],
+            include: [
+              path.resolve(__dirname, '../ssr'),
+              path.resolve(__dirname, '../src'),
+            ],
+            test: /\.jsx?$/,
+            use: [
+              {
+                loader: 'thread-loader',
+                options: {
+                  poolTimeout: Infinity,
+                },
+              },
+              {
+                loader: 'babel-loader',
+                options: {
+                  presets: ['@babel/preset-env'],
+                },
+              },
+            ],
+          },
+          {
+            test: /\.css$/,
+            use: [
+              {
+                loader: MiniCssExtractPlugin.loader,
+                options: { publicPath: '../../' },
+              },
+              {
+                loader: 'css-loader',
+              },
+            ],
+          },
+          {
+            test: /\.(e|m)jsx?$/,
+            type: 'javascript/auto',
           },
         ],
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: { publicPath: '../../' },
-          },
-          {
-            loader: 'css-loader',
-          },
-        ],
-      },
-      {
-        test: /\.(e|m)jsx?$/,
-        type: 'javascript/auto',
       },
     ],
   },

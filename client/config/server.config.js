@@ -7,19 +7,17 @@ const common = require('./common.config');
 
 const mode = process.env.NODE_ENV;
 const isProd = mode === 'production';
-// const renderer = isProd ? '../ssr/render.js' : '../ssr/renderMiddleware.js';
+const renderer = isProd ? '../ssr/render.js' : '../ssr/renderMiddleware.js';
 
 module.exports = merge(common, {
   devtool: isProd ? undefined : 'source-map',
-  // entry: [path.resolve(__dirname, renderer)],
-  entry: [path.resolve(__dirname, '../ssr/render.js')],
+  entry: [path.resolve(__dirname, renderer)],
   mode,
   name: 'server',
   output: {
     filename: 'main.js',
     /** @todo - this causes an error in dev serve mode */
     library: {
-      name: 'client',
       type: 'commonjs2',
     },
     path: path.resolve(__dirname, '../build'),

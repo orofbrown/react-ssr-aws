@@ -16,10 +16,10 @@ const isProd = mode === 'production';
 
 const plugins = isProd
   ? [
-      // new BundleAnalyzerPlugin({
-      //   analyzerMode: 'static',
-      //   openAnalyzer: false,
-      // }),
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+      }),
     ]
   : [new HotModuleReplacementPlugin(), new CleanWebpackPlugin()];
 
@@ -27,8 +27,8 @@ module.exports = merge(common, {
   devtool: isProd ? undefined : 'inline-source-map',
   entry: [
     path.resolve(__dirname, '../src/index.js'),
-    // 'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true&quiet=false&noInfo=false',
-    // 'react-hot-loader/patch',
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true&quiet=false&noInfo=false',
+    'react-hot-loader/patch',
   ],
   mode,
   name: 'client',
@@ -47,21 +47,21 @@ module.exports = merge(common, {
     splitChunks: {
       chunks: 'all',
     },
-    //   ...(isProd && {
-    //     minimize: true,
-    //     minimizer: [
-    //       new TerserPlugin({
-    //         terserOptions: {
-    //           keep_fnames: true,
-    //           output: {
-    //             comments: false,
-    //           },
-    //         },
-    //       }),
-    //       new CssMinimizerPlugin(),
-    //     ],
-    //     sideEffects: true,
-    //   }),
+    ...(isProd && {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            keep_fnames: true,
+            output: {
+              comments: false,
+            },
+          },
+        }),
+        new CssMinimizerPlugin(),
+      ],
+      sideEffects: true,
+    }),
   },
   performance: isProd && {
     hints: 'warning',

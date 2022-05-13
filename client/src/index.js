@@ -1,7 +1,12 @@
-function main() {
-  const root = document.getElementById('#root');
+import 'react-hot-loader/patch';
+import React from 'react';
+import { hydrateRoot } from 'react-dom/client';
 
-  root.innerHTML = 'Hello World!';
+import App from './App';
+import './index.css';
 
-  return root;
+hydrateRoot(document.getElementById('root'), <App />);
+
+if (module.hot) {
+  module.hot.accept((err) => console.log('Error hot reloading', err));
 }
