@@ -6,17 +6,23 @@ const { merge } = require('webpack-merge');
 const common = require('./common.config');
 
 const mode = process.env.NODE_ENV;
+const isProd = mode === 'production';
+// const renderer = isProd ? '../ssr/render.js' : '../ssr/renderMiddleware.js';
 
 module.exports = merge(common, {
-  devtool: 'source-map',
-  entry: [path.resolve(__dirname, '../ssr/renderMiddleware.js')],
+  devtool: isProd ? undefined : 'source-map',
+  // entry: [path.resolve(__dirname, renderer)],
+  entry: [path.resolve(__dirname, '../ssr/render.js')],
   mode,
   name: 'server',
   output: {
     filename: 'main.js',
-    libraryTarget: 'commonjs2',
+    /** @todo - this causes an error in dev serve mode */
+    library: {
+      name: 'client',
+      type: 'commonjs2',
+    },
     path: path.resolve(__dirname, '../build'),
-    publicPath: '',
   },
   plugins: [new optimize.LimitChunkCountPlugin({ maxChunks: 1 })],
   target: 'node',

@@ -1,7 +1,7 @@
-function ProductInformationMiddleware(req, res) {
-  console.log('ProductInformationMiddleware');
+const render = require('./render');
 
-  res.sendStatus(200);
+function ProductInformationMiddleware(req, res) {
+  render(req, res);
 }
 
 module.exports = ProductInformationMiddleware;

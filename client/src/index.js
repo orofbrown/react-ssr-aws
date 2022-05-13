@@ -5,5 +5,3 @@ function main() {
 
   return root;
 }
-
-export default main;

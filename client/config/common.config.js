@@ -1,13 +1,11 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { DefinePlugin } = require('webpack');
+
+const { getCommitHash } = require('./utils');
 
 module.exports = {
   bail: true,
-  resolve: {
-    cacheWithContext: false,
-    extensions: ['.js', '.json', '.jsx'],
-    modules: ['node_modules'],
-  },
   module: {
     rules: [
       {
@@ -20,23 +18,26 @@ module.exports = {
         },
       },
       {
-        exclude: [/[/\\\\]node_modules[/\\\\]/],
+        exclude: [/node_modules/],
         include: [
-          path.resolve(__dirname, 'src'),
-          path.resolve(__dirname, 'server'),
+          path.resolve(__dirname, '../ssr'),
+          path.resolve(__dirname, '../src'),
         ],
         test: /\.js$/,
-        // use: [
-        //   {
-        //     loader: 'thread-loader',
-        //     options: {
-        //       poolTimeout: Infinity,
-        //     },
-        //   },
-        //   {
-        //     loader: 'babel-loader',
-        //   },
-        // ],
+        use: [
+          {
+            loader: 'thread-loader',
+            options: {
+              poolTimeout: Infinity,
+            },
+          },
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -56,7 +57,10 @@ module.exports = {
       },
     ],
   },
-  // plugins: [
-  // new DefinePlugin({ GIT_COMMIT_HASH: '' })
-  // ],
+  plugins: [new DefinePlugin({ GIT_COMMIT_HASH: getCommitHash() })],
+  resolve: {
+    cacheWithContext: false,
+    extensions: ['web.js', '.mjs', '.js', '.json', '.jsx', 'web.jsx'],
+    modules: ['node_modules'],
+  },
 };

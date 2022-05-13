@@ -21,6 +21,8 @@ function buildForDeploy() {
     } else if (stats.hasWarnings()) {
       console.warn(logOutput.warnings);
     }
+
+    process.exit(0);
   });
 }
 
