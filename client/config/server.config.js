@@ -7,7 +7,7 @@ const common = require('./common.config');
 
 const mode = process.env.NODE_ENV;
 const isProd = mode === 'production';
-const renderer = isProd ? '../ssr/render.js' : '../ssr/renderMiddleware.js';
+const renderer = isProd ? '../ssr/renderProd.js' : '../ssr/renderDev.js';
 
 module.exports = merge(common, {
   devtool: isProd ? undefined : 'source-map',

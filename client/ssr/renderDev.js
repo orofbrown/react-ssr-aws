@@ -3,7 +3,7 @@
 
 // const INDEX_HTML_PATH = path.resolve(__dirname, '../public/index.html');
 
-function renderMiddleware({ clientStats, serverStats }) {
+function renderDev({ clientStats, serverStats }) {
   return (req, res, next) => {
     const { path } = req;
 
@@ -13,10 +13,10 @@ function renderMiddleware({ clientStats, serverStats }) {
 
     res.send(`<html>
   <body>
-    Hello From the Server Side
+    Hello From Render Middleware
   </body>
 </html>`);
   };
 }
 
-export default renderMiddleware;
+export default renderDev;

@@ -1,7 +1,7 @@
-const { renderHTML } = require('client/build/main').client;
+const { default: renderUI } = require('client/build/main');
 
 function render(req, res) {
-  const html = renderHTML();
+  const html = renderUI();
   res.status(200).send(html);
 }
 

@@ -9,18 +9,15 @@ const { HotModuleReplacementPlugin } = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { merge } = require('webpack-merge');
 
+/** @TODO - exclude unwanted files from bundle */
+
 const common = require('./common.config');
 
 const mode = process.env.NODE_ENV;
 const isProd = mode === 'production';
 
 const plugins = isProd
-  ? [
-      new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-        openAnalyzer: false,
-      }),
-    ]
+  ? []
   : [new HotModuleReplacementPlugin(), new CleanWebpackPlugin()];
 
 module.exports = merge(common, {
