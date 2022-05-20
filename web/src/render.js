@@ -1,8 +1,8 @@
-const { default: renderUI } = require('client/build/main');
+const { default: getResponseStream } = require('client/build/main');
 
 function render(req, res) {
-  const html = renderUI();
-  res.status(200).send(html);
+  const hydrate = getResponseStream();
+  res.status(200).send(hydrate(res));
 }
 
 module.exports = render;

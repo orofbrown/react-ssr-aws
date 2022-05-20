@@ -1,9 +1,6 @@
-// const fs = require('fs');
-// const path = require('path');
+import render from './render';
 
-// const INDEX_HTML_PATH = path.resolve(__dirname, '../public/index.html');
-
-function renderDev({ clientStats, serverStats }) {
+function renderDev(webpackStats) {
   return (req, res, next) => {
     const { path } = req;
 
@@ -11,11 +8,8 @@ function renderDev({ clientStats, serverStats }) {
       return next();
     }
 
-    res.send(`<html>
-  <body>
-    Hello From Render Middleware
-  </body>
-</html>`);
+    const hydrate = render(webpackStats);
+    hydrate(res);
   };
 }
 
