@@ -11,8 +11,6 @@ const clientConfig = require('../config/client.config');
 const serverConfig = require('../config/server.config');
 // const { createSecureDevServer } = require('./utils');
 
-/** @TODO - setup nginx server */
-
 // const HTTPS_PORT = 3001;
 // const WEB_HOST = process.env.WEB_HOST || 'localhost';
 // const WEB_PORT = parseInt(process.env.WEB_PORT, 10) || 8181;
@@ -44,7 +42,6 @@ function createListeners() {
 }
 
 async function done(...args) {
-  // console.log('DONE');
   if (!isBuilt) {
     isBuilt = true;
     await createListeners();

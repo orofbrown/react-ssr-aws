@@ -41,5 +41,9 @@
   "dependencies": {
     "@babel/runtime": "^7.17.9",
     "core-js": "^3.22.5"
-  }
+  },
+  "files": [
+    "build/main.server.js",
+    "build/assets.json"
+  ]
 }

@@ -3,7 +3,8 @@ const nodeHttp = require('http');
 const app = require('./app');
 const config = require('./config');
 
-app.use(express.static('../static-assets'));
+/** @note - should come from S3 or some separate server */
+// app.use(express.static('../static-assets'));
 
 const httpServer = nodeHttp.createServer(app);
 

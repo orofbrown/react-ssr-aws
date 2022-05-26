@@ -2,7 +2,6 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
 const helmet = require('helmet');
-const ProductInformationMiddleware = require('./ProductInformationMiddleware');
 const router = require('./router');
 
 const app = express();
@@ -20,7 +19,9 @@ app.use(
   helmet.contentSecurityPolicy({
     directives: {
       'default-src': helmet.contentSecurityPolicy.dangerouslyDisableDefaultSrc,
-      'frame-ancestors': ["'self"],
+      /** @TODO - dynamic */
+      'script-src': ["'self'", 'localhost:8000'],
+      'frame-ancestors': ["'self'"],
     },
   }),
 );

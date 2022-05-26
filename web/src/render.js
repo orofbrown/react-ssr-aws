@@ -1,8 +1,9 @@
-const { default: getResponseStream } = require('client/build/main');
+const { default: render } = require('client/build/main.server');
+/** @todo - old TGZ is getting cached by Yarn for some reason and using old assets.json */
+const assets = require('client/build/assets.json');
 
-function render(req, res) {
-  const hydrate = getResponseStream();
-  res.status(200).send(hydrate(res));
+function ssr(req, res) {
+  render(res, assets);
 }
 
-module.exports = render;
+module.exports = ssr;

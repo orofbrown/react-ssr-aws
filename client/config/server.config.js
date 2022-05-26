@@ -1,4 +1,4 @@
-/** @note - needed for DEV ONLY */
+/** @todo - Webpack recommends separate config files */
 
 const path = require('path');
 const { optimize } = require('webpack');
@@ -7,7 +7,7 @@ const common = require('./common.config');
 
 const mode = process.env.NODE_ENV;
 const isProd = mode === 'production';
-const renderer = isProd ? '../ssr/renderProd.js' : '../ssr/renderDev.js';
+const renderer = isProd ? '../ssr/render.js' : '../ssr/renderDev.js';
 
 module.exports = merge(common, {
   devtool: isProd ? undefined : 'source-map',
@@ -15,8 +15,8 @@ module.exports = merge(common, {
   mode,
   name: 'server',
   output: {
-    filename: 'main.js',
-    /** @todo - this causes an error in dev serve mode */
+    clean: true,
+    filename: 'main.server.js',
     library: {
       type: 'commonjs2',
     },

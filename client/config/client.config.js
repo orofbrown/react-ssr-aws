@@ -16,24 +16,27 @@ const common = require('./common.config');
 const mode = process.env.NODE_ENV;
 const isProd = mode === 'production';
 
+const entry = [path.resolve(__dirname, '../src/index.js')];
+if (!isProd) {
+  entry.push(
+    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true&quiet=false&noInfo=false',
+    'react-hot-loader/patch',
+  );
+}
+
 const plugins = isProd
   ? []
   : [new HotModuleReplacementPlugin(), new CleanWebpackPlugin()];
 
 module.exports = merge(common, {
   devtool: isProd ? undefined : 'inline-source-map',
-  entry: [
-    path.resolve(__dirname, '../src/index.js'),
-    'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000&reload=true&quiet=false&noInfo=false',
-    'react-hot-loader/patch',
-  ],
+  entry,
   mode,
   name: 'client',
   output: {
-    // chunkFilename: 'static/js/[name].chunk.[contenthash].js',
     chunkFilename: 'static/js/[name].chunk.js',
-    // filename: 'static/js/[name].bundle.chunk.[contenthash].js',
-    filename: 'static/js/[name].bundle.js',
+    // filename: 'static/js/[name].client.[contenthash].js',
+    filename: 'static/js/[name].client.js',
     path: path.resolve(__dirname, '../build'),
     publicPath: '',
   },

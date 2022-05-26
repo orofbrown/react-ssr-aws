@@ -1,5 +1,5 @@
 process.env.NODE_ENV = 'development';
 
-const serve = require('../ssr/serve.js');
+const serve = require('./serve.js');
 
 serve();
